@@ -1,63 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-HK">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCC分區管理系統</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="page-container">
-        
-        <!-- 頂部標題大卡片 (帶有經理個種精緻外框與漸層) -->
-        <header class="top-header-card">
-            <div class="brand-subtitle">✨ MCC OPERATIONS HUB</div>
-            <h1>MCC分區管理系統</h1>
-            <p class="brand-desc">停車場營運工具及工作流程整合平台</p>
-        </header>
-
-        <!-- 快速搜尋停車場資料卡片 -->
-        <section class="search-main-card">
-            <div class="search-card-top">
-                <span class="directory-badge">🏢 停車場目錄</span>
-            </div>
-            <div class="search-title-area">
-                <h2>快速搜尋停車場資料</h2>
-                <p class="search-subtitle-text">可搜尋場號、中文或英文名稱、地址、地區、分區及負責人。</p>
-            </div>
-            <div class="data-source-top">資料來源 : Car Park Directory</div>
-
-            <!-- 搜尋輸入框 -->
-            <div class="input-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" placeholder="例如 P004、天星、Star Ferry、中環">
-            </div>
-
-            <!-- 下拉篩選列 -->
-            <div class="filters-container">
-                <div class="dropdown-box">
-                    <span>區域</span>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <div class="dropdown-box">
-                    <span>地區</span>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <div class="dropdown-box">
-                    <span>經理</span>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-            </div>
-
-            <div class="search-bottom-tip">
-                輸入關鍵字或選擇區域、地區、經理，即可查看停車場地址、聯絡電話及負責人資料。
-            </div>
-        </section>
-
-        <!-- 功能模組卡片格網 (第一行 4 個) -->
-        <section class="modules-grid-row">
-            <!-- 職員請假申請 -->
-            <div class="func-card" onclick="alert('功能開發中...')">
+<!-- 第一行功能卡片 (4格) -->
+        <div class="modules-grid-row">
+            <div class="func-card" onclick="alert('進入請假申請...')">
                 <div class="icon-box blue-bg">📄</div>
                 <div class="func-text">
                     <h3>職員請假申請</h3>
@@ -65,8 +8,7 @@
                 </div>
             </div>
 
-            <!-- 鎖車報告 -->
-            <div class="func-card" onclick="alert('功能開發中...')">
+            <div class="func-card" onclick="alert('進入鎖車報告...')">
                 <div class="icon-box orange-bg">🔒</div>
                 <div class="func-text">
                     <h3>鎖車報告</h3>
@@ -74,8 +16,7 @@
                 </div>
             </div>
 
-            <!-- 時租計算器 -->
-            <div class="func-card" onclick="alert('功能開發中...')">
+            <div class="func-card" onclick="alert('進入時租計算器...')">
                 <div class="icon-box green-bg">📊</div>
                 <div class="func-text">
                     <h3>時租計算器</h3>
@@ -83,20 +24,18 @@
                 </div>
             </div>
 
-            <!-- Yedpay 收費 -->
-            <div class="func-card" onclick="alert('功能開發中...')">
+            <div class="func-card" onclick="alert('進入 Yedpay 收費...')">
                 <div class="icon-box cyan-bg">💳</div>
                 <div class="func-text">
                     <h3>Yedpay 收費</h3>
                     <p>發送收費通知給 OSC</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 功能模組卡片格網 (第二行：問題查詢 + 員工日常操作教程) -->
-        <section class="modules-grid-row" style="grid-template-columns: repeat(4, 1fr);">
-            <!-- 問題查詢 -->
-            <div class="func-card" onclick="alert('功能開發中...')" style="grid-column: span 1;">
+        <!-- 第二行功能卡片 (2格，改用獨立整齊嘅 container 避免拉長) -->
+        <div class="modules-grid-row-2">
+            <div class="func-card" onclick="alert('進入問題查詢...')">
                 <div class="icon-box cyan-light-bg">💬</div>
                 <div class="func-text">
                     <h3>問題查詢</h3>
@@ -104,37 +43,22 @@
                 </div>
             </div>
 
-            <!-- 員工日常操作教程 -->
-            <div class="func-card" onclick="openManualsPage()" style="grid-column: span 1;">
-                <div class="icon-box blue-bg">📖</div>
+            <div class="func-card" onclick="window.location.href='manuals.html'">
+                <div class="icon-box purple-bg">📖</div>
                 <div class="func-text">
                     <h3>員工日常操作教程</h3>
                     <p>查看停車場日常營運與系統操作手冊</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 管理員登入按鈕置中 -->
-        <section class="admin-login-row">
-            <div class="admin-card" onclick="alert('管理員登入介面')">
+        <!-- 管理員登入 -->
+        <div class="admin-login-row">
+            <div class="admin-card" onclick="alert('管理員登入...')">
                 <div class="icon-box purple-bg">👤</div>
                 <div class="func-text">
                     <h3>管理員登入</h3>
                     <p>經理專用管理介面</p>
                 </div>
             </div>
-        </section>
-
-        <!-- 底部版權 -->
-        <footer class="footer-info">
-            MCC Operations Hub
-        </footer>
-    </div>
-
-    <script>
-        function openManualsPage() {
-            window.location.href = 'manuals.html';
-        }
-    </script>
-</body>
-</html>
+        </div>
