@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>系統操作手冊選單 - MCC分區管理系統</title>
+    <title>停車場主系統操作 (Parking Logic) - MCC分區管理系統</title>
     <style>
         * {
             box-sizing: border-box;
@@ -49,7 +49,7 @@
         }
 
         .top-header-card h1 {
-            font-size: 34px;
+            font-size: 30px;
             color: #0f172a;
             font-weight: 800;
             letter-spacing: -0.5px;
@@ -61,31 +61,32 @@
             color: #64748b;
         }
 
-        /* 手冊分類卡片格網 (2 欄精緻排版) */
-        .manuals-grid {
+        /* 內容方塊網格排版 (2 欄精緻卡片) */
+        .modules-grid-row {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
-            margin-bottom: 30px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
-        /* 單個卡片設計 */
-        .func-card {
+        /* 單個方塊卡片設計 */
+        .pdf-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.75) 100%);
             border: 1px solid rgba(215, 228, 245, 0.85);
             border-radius: 16px;
             padding: 22px 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            text-decoration: none;
             transition: all 0.25s ease;
         }
 
-        .func-card::before {
+        .pdf-card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -96,14 +97,13 @@
             border-radius: 16px 16px 0 0;
         }
 
-        .func-card:hover {
+        .pdf-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
             border-color: #3b82f6;
             background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(230, 240, 255, 0.9));
         }
 
-        /* 圖示方塊 */
         .icon-box {
             width: 48px;
             height: 48px;
@@ -113,32 +113,28 @@
             justify-content: center;
             font-size: 22px;
             flex-shrink: 0;
+            background: #eff6ff;
+            color: #2563eb;
         }
 
-        .blue-bg { background: #eff6ff; color: #2563eb; }
-        .orange-bg { background: #fff7ed; color: #ea580c; }
-        .green-bg { background: #f0fdf4; color: #16a34a; }
-        .cyan-bg { background: #ecfeff; color: #0891b2; }
-        .purple-bg { background: #faf5ff; color: #9333ea; }
-        .yellow-bg { background: #fef3c7; color: #d97706; }
-
-        .func-text h3 {
+        .pdf-text h3 {
             font-size: 15px;
             color: #0f172a;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
-        .func-text p {
+        .pdf-text p {
             font-size: 12px;
             color: #64748b;
-            line-height: 1.4;
         }
 
-        /* 返回主頁按鈕 */
-        .back-home-row {
-            text-align: center;
-            margin-top: 20px;
+        /* 返回按鈕列 */
+        .back-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
         }
 
         .back-btn {
@@ -151,6 +147,7 @@
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            text-decoration: none;
             transition: all 0.2s ease;
         }
 
@@ -169,9 +166,9 @@
             margin-top: 40px;
         }
 
-        /* 響應式：手機時自動變單欄 */
+        /* 響應式手機單欄 */
         @media (max-width: 768px) {
-            .manuals-grid {
+            .modules-grid-row {
                 grid-template-columns: 1fr !important;
             }
         }
@@ -182,71 +179,65 @@
         
         <!-- 頂部標題大卡片 -->
         <header class="top-header-card">
-            <div class="brand-subtitle">📖 SYSTEM OPERATIONS MANUALS</div>
-            <h1>系統操作手冊選單</h1>
-            <p class="brand-desc">請選擇您需要查看的停車場分區及系統操作指引</p>
+            <div class="brand-subtitle">🅿️ PARKING LOGIC SYSTEM GUIDE</div>
+            <h1>停車場主系統操作指南</h1>
+            <p class="brand-desc">請選擇您需要查看的 Parking Logic 系統詳細操作手冊</p>
         </header>
 
-        <!-- 手冊分類卡片格網 (嚴格對齊經典 6 項順序) -->
-        <section class="manuals-grid">
-            <!-- 1. 停車場主系統操作 (Parking Logic) -> 點擊跳轉至明細頁 -->
-            <div class="func-card" onclick="window.location.href='parking_logic.html'">
-                <div class="icon-box blue-bg">🅿️</div>
-                <div class="func-text">
-                    <h3>停車場主系統操作</h3>
-                    <p>Parking Logic 系統操作指南</p>
+        <!-- 方塊卡片清單 -->
+        <div class="modules-grid-row">
+            
+            <!-- 1. 認識 Control Centre (控制中心) -> 連結往精美網頁版 -->
+            <a href="control_centre.html" class="pdf-card">
+                <div class="icon-box" style="background:#f0f9ff; color:#0284c7;">🖥️</div>
+                <div class="pdf-text">
+                    <h3>認識 Control Centre (控制中心)</h3>
+                    <p>點擊進入詳細網頁版指引</p>
                 </div>
-            </div>
+            </a>
 
-            <!-- 2. 車牌識別系統操作 (LPRS) -->
-            <div class="func-card" onclick="alert('載入 LPRS 手冊...')">
-                <div class="icon-box cyan-bg">📷</div>
-                <div class="func-text">
-                    <h3>車牌識別系統操作</h3>
-                    <p>LPRS 車牌識別系統維護與疑難排解</p>
+            <!-- 2. 如何打開或搜尋每日報告 (REPORT) -->
+            <a href="pdfs/daily_report.pdf" target="_blank" class="pdf-card">
+                <div class="icon-box" style="background:#f0fdf4; color:#16a34a;">📊</div>
+                <div class="pdf-text">
+                    <h3>如何打開或搜尋每日報告 (REPORT)</h3>
+                    <p>點擊檢視詳細操作 PDF 指引</p>
                 </div>
-            </div>
+            </a>
 
-            <!-- 3. 尋車系統操作 (Car Searching) -->
-            <div class="func-card" onclick="alert('載入尋車系統手冊...')">
-                <div class="icon-box green-bg">🚗</div>
-                <div class="func-text">
-                    <h3>尋車系統操作</h3>
-                    <p>Car Searching 系統查詢與應用</p>
+            <!-- 3. 如何顯示 System Journal (流水帶) -->
+            <a href="pdfs/system_journal.pdf" target="_blank" class="pdf-card">
+                <div class="icon-box" style="background:#fef3c7; color:#d97706;">📜</div>
+                <div class="pdf-text">
+                    <h3>如何顯示 System Journal (流水帶)</h3>
+                    <p>點擊檢視詳細操作 PDF 指引</p>
                 </div>
-            </div>
+            </a>
 
-            <!-- 4. 車輛充電系統操作 (EV Charging) -->
-            <div class="func-card" onclick="alert('載入充電系統手冊...')">
-                <div class="icon-box yellow-bg">⚡</div>
-                <div class="func-text">
-                    <h3>車輛充電系統操作</h3>
-                    <p>EV Charging 充電樁管理與操作</p>
+            <!-- 4. 如何打開 System Events (系統事件) -->
+            <a href="pdfs/system_events.pdf" target="_blank" class="pdf-card">
+                <div class="icon-box" style="background:#eff6ff; color:#2563eb;">📄</div>
+                <div class="pdf-text">
+                    <h3>如何打開 System Events (系統事件)</h3>
+                    <p>點擊檢視詳細操作 PDF 指引</p>
                 </div>
-            </div>
+            </a>
 
-            <!-- 5. 閉路電視監控操作 (CCTV) -->
-            <div class="func-card" onclick="alert('載入閉路電視手冊...')">
-                <div class="icon-box orange-bg">📹</div>
-                <div class="func-text">
-                    <h3>閉路電視監控操作</h3>
-                    <p>CCTV 監控系統與回放操作</p>
+            <!-- 5. 如何修改在場車輛數目 (Counter) -->
+            <a href="pdfs/counter_modify.pdf" target="_blank" class="pdf-card">
+                <div class="icon-box" style="background:#fff7ed; color:#ea580c;">🔢</div>
+                <div class="pdf-text">
+                    <h3>如何修改在場車輛數目 (Counter)</h3>
+                    <p>點擊檢視詳細操作 PDF 指引</p>
                 </div>
-            </div>
+            </a>
 
-            <!-- 6. 故障排除 (Troubleshooting) -->
-            <div class="func-card" onclick="alert('載入故障排除手冊...')">
-                <div class="icon-box purple-bg">🛠️</div>
-                <div class="func-text">
-                    <h3>故障排除</h3>
-                    <p>Troubleshooting 設備報修與應急指引</p>
-                </div>
-            </div>
-        </section>
+        </div>
 
-        <!-- 返回主頁按鈕列 -->
-        <div class="back-home-row">
-            <button class="back-btn" onclick="window.location.href='index.html'">← 返回 MCC 主頁</button>
+        <!-- 返回按鈕列 -->
+        <div class="back-row">
+            <a href="manuals.html" class="back-btn">← 返回操作手冊選單</a>
+            <a href="index.html" class="back-btn">🏠 返回 MCC 主頁</a>
         </div>
 
         <!-- 底部版權 -->

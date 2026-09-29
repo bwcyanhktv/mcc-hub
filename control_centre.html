@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>認識 Control Centre (控制中心) - MCC分區管理系統</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #f0f5ff 0%, #f4f8fc 50%, #f9fbff 100%);
+            color: #1e293b;
+            padding: 50px 20px;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 頂部標題大卡片 */
+        .top-header-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(235, 244, 255, 0.8) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(215, 228, 245, 0.85);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(30, 58, 138, 0.05);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            color: #3b82f6;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .top-header-card h1 {
+            font-size: 30px;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .brand-desc {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* 單欄沉浸式大卡片設計 (圖文合一) */
+        .section-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.75) 100%);
+            border: 1px solid rgba(215, 228, 245, 0.85);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%);
+            border-radius: 18px 18px 0 0;
+        }
+
+        .card-header-flex {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .icon-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .card-header-flex h2 {
+            font-size: 20px;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .section-card p {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        /* 完整重點條列 */
+        .feature-list {
+            list-style: none;
+            margin-bottom: 22px;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 24px;
+            font-size: 14px;
+            color: #334155;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .feature-list li::before {
+            content: '▪';
+            position: absolute;
+            left: 6px;
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* 特別提醒警示方塊 */
+        .alert-box {
+            background: rgba(254, 243, 199, 0.6);
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            font-size: 13px;
+            color: #92400e;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* 可點擊放大的圖片容器 */
+        .zoomable-img-container {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(203, 213, 225, 0.8);
+            background: #f8fafc;
+            cursor: zoom-in;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .zoomable-img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .zoomable-img-container:hover img {
+            transform: scale(1.01);
+        }
+
+        .zoom-hint {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(15, 23, 42, 0.75);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+        }
+
+        /* 全螢幕圖片放大燈箱 (Lightbox Modal) */
+        #lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        #lightbox-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        #lightbox-modal .close-btn {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #ffffff;
+            font-size: 36px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        #lightbox-modal .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* 原版 PDF 下載專區 (全寬) */
+        .full-width-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.75) 100%);
+            border: 1px solid rgba(215, 228, 245, 0.85);
+            border-radius: 18px;
+            padding: 25px 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .full-width-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+            border-radius: 18px 18px 0 0;
+        }
+
+        .pdf-info-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .action-btn {
+            background: #3b82f6;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            flex-shrink: 0;
+        }
+
+        .action-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* 返回按鈕列 */
+        .back-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .back-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #2563eb;
+        }
+
+        /* 底部版權 */
+        .footer-info {
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .full-width-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        
+        <!-- 頂部標題大卡片 -->
+        <header class="top-header-card">
+            <div class="brand-subtitle">✨ MCC OPERATIONS HUB</div>
+            <h1>認識 Control Centre (控制中心)</h1>
+            <p class="brand-desc">完整系統介面導覽、主機架構、出入口編號與選單操作圖文對照指引</p>
+        </header>
+
+        <!-- 區塊 1: 完整系統畫面總覽與架構解析 -->
+        <div class="section-card">
+            <div class="card-header-flex">
+                <div class="icon-box">🖥️</div>
+                <h2>Control Centre 系統介面與主機架構導覽</h2>
+            </div>
+            <p>對應完整操作介面與系統分機配置，現場人員請對照以下要點進行判讀：</p>
+            <ul class="feature-list">
+                <li><strong>RW9 主機：</strong> 控制室核心調度與監控終端。</li>
+                <li><strong>PS3 分機：</strong> 用作特定區域車位數據統計與狀態同步。</li>
+                <li><strong>PS2 分機：</strong> 支援各區閘機狀態即時聯動。</li>
+                <li><strong>AU1 主機：</strong> 系統核心數據匯總與通訊樞紐。</li>
+                <li><strong>EN / EX 閘機代號：</strong> 畫面中清晰標示入閘口（Entrance）與出閘口（Exit）位置。</li>
+                <li><strong>總車位數據監控區：</strong> 右側實時顯示時租、月租及總車位（Total）餘額。</li>
+            </ul>
+
+            <!-- 特別警示提醒方塊 -->
+            <div class="alert-box">
+                ⚠️ <strong>前線操作重要提示：</strong> 其他場的閘機編號可能不一樣，但 <strong>EN</strong> 就是入口，而 <strong>EX</strong> 就是出口。
+            </div>
+
+            <!-- 點擊可放大的完整大圖 -->
+            <div class="zoomable-img-container" onclick="openLightbox(this.querySelector('img'))">
+                <img src="images/cc_full_overview.png" alt="Control Centre 完整介面與主機架構導覽" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; text-align:center; color:#94a3b8; font-size:13px;\'>📷 建議在此處放置包含整張圖重點嘅大圖截圖 (images/cc_full_overview.png)<br><span style=\'font-size:11px; color:#cbd5e1;\'>（點擊圖片可放大檢視）</span></div>';">
+                <div class="zoom-hint">🔍 點擊放大圖片</div>
+            </div>
+        </div>
+
+        <!-- 原版 PDF 下載專區 -->
+        <div class="full-width-card">
+            <div class="pdf-info-group">
+                <div class="icon-box" style="background:#fef3c7; color:#d97706; width:46px; height:46px; border-radius:12px; font-size:20px;">📄</div>
+                <div>
+                    <h3 style="font-size:15px; color:#0f172a; margin-bottom:2px;">認識 Control Centre (控制中心)</h3>
+                    <p style="font-size:12px; color:#64748b; margin:0;">原版培訓簡報 PDF（支援隨時查閱與下載歸檔）</p>
+                </div>
+            </div>
+            <a href="pdfs/control_centre.pdf" target="_blank" class="action-btn">下載原版 PDF</a>
+        </div>
+
+        <!-- 返回按鈕列 -->
+        <div class="back-row">
+            <a href="parking_logic.html" class="back-btn">← 返回 Parking Logic 手冊選單</a>
+            <a href="index.html" class="back-btn">🏠 返回 MCC 主頁</a>
+        </div>
+
+        <!-- 底部版權 -->
+        <footer class="footer-info">
+            MCC Operations Hub
+        </footer>
+    </div>
+
+    <!-- 全螢幕圖片放大燈箱 (Lightbox Modal) -->
+    <div id="lightbox-modal" onclick="closeLightbox()">
+        <span class="close-btn">&times;</span>
+        <img id="lightbox-img" src="" alt="放大預覽">
+    </div>
+
+    <script>
+        function openLightbox(imgElement) {
+            if (!imgElement || imgElement.src.includes('error') || imgElement.src === '') return;
+            const modal = document.getElementById('lightbox-modal');
+            const modalImg = document.getElementById('lightbox-img');
+            modalImg.src = imgElement.src;
+            modal.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
