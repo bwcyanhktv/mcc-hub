@@ -1,4 +1,356 @@
-<!-- 第一行功能卡片 (4格) -->
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCC分區管理系統 - 停車場營運工具</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #f0f5ff 0%, #f4f8fc 50%, #f9fbff 100%);
+            color: #1e293b;
+            padding: 50px 20px;
+            min-height: 100vh;
+        }
+
+        .page-container {
+            max-width: 1080px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 頂部標題大卡片 */
+        .top-header-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(235, 244, 255, 0.8) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(215, 228, 245, 0.85);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(30, 58, 138, 0.05);
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            color: #3b82f6;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .top-header-card h1 {
+            font-size: 34px;
+            color: #0f172a;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .brand-desc {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* 快速搜尋大卡片 */
+        .search-main-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.75) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(215, 228, 245, 0.85);
+            border-radius: 18px;
+            padding: 30px 35px;
+            box-shadow: 0 12px 35px rgba(30, 58, 138, 0.05);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .func-card::before,
+        .admin-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6 0%, #6366f1 50%, #a855f7 100%);
+            border-radius: 16px 16px 0 0;
+        }
+
+        .directory-badge {
+            font-size: 12px;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .search-title-area {
+            margin-top: 6px;
+            margin-bottom: 6px;
+        }
+
+        .search-title-area h2 {
+            font-size: 22px;
+            color: #0f172a;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .search-subtitle-text {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .data-source-top {
+            position: absolute;
+            top: 30px;
+            right: 35px;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        /* 搜尋輸入框 */
+        .input-wrapper {
+            position: relative;
+            margin: 20px 0 14px 0;
+        }
+
+        .input-wrapper .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 13px 16px 13px 46px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #0f172a;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+        }
+
+        /* 下拉篩選列 */
+        .filters-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .dropdown-box {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 105px;
+            cursor: pointer;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        .search-bottom-tip {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* 網格排版 */
+        .modules-grid-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .modules-grid-row-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        /* 單個功能卡片設計 */
+        .func-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.75) 100%);
+            border: 1px solid rgba(215, 228, 245, 0.85);
+            border-radius: 16px;
+            padding: 22px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .func-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(230, 240, 255, 0.9));
+        }
+
+        /* 圖示方塊微調 */
+        .icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        /* 顏色配搭 */
+        .blue-bg { background: #eff6ff; color: #2563eb; }
+        .orange-bg { background: #fff7ed; color: #ea580c; }
+        .green-bg { background: #f0fdf4; color: #16a34a; }
+        .cyan-bg { background: #ecfeff; color: #0891b2; }
+        .cyan-light-bg { background: #f0fdf4; color: #0d9488; }
+        .purple-bg { background: #faf5ff; color: #9333ea; }
+
+        .func-text h3 {
+            font-size: 15px;
+            color: #0f172a;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .func-text p {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        /* 管理員登入列置中 */
+        .admin-login-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+            margin-bottom: 30px;
+        }
+
+        .admin-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 246, 255, 0.75) 100%);
+            border: 1px solid rgba(215, 228, 245, 0.85);
+            border-radius: 16px;
+            padding: 22px 30px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+            width: 320px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.1);
+            border-color: #9333ea;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(240, 230, 255, 0.9));
+        }
+
+        /* 底部版權 */
+        .footer-info {
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            margin-top: 40px;
+        }
+
+        /* 響應式 */
+        @media (max-width: 900px) {
+            .modules-grid-row {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+        @media (max-width: 600px) {
+            .modules-grid-row, .modules-grid-row-2 {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        
+        <!-- 頂部標題大卡片 -->
+        <header class="top-header-card">
+            <div class="brand-subtitle">✨ MCC OPERATIONS HUB</div>
+            <h1>MCC分區管理系統</h1>
+            <p class="brand-desc">停車場營運工具及工作流程整合平台</p>
+        </header>
+
+        <!-- 快速搜尋大卡片 -->
+        <section class="search-main-card">
+            <span class="directory-badge">🏢 停車場目錄</span>
+            <div class="data-source-top">資料來源 : Car Park Directory</div>
+            
+            <div class="search-title-area">
+                <h2>快速搜尋停車場資料</h2>
+                <p class="search-subtitle-text">可搜尋場號、中文或英文名稱、地址、地區、分區及負責人。</p>
+            </div>
+
+            <!-- 搜尋框 -->
+            <div class="input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="例如 P004、天星、Star Ferry、中環">
+            </div>
+
+            <!-- 下拉篩選 -->
+            <div class="filters-container">
+                <div class="dropdown-box">
+                    <span>區域</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-box">
+                    <span>地區</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <div class="dropdown-box">
+                    <span>經理</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+            </div>
+
+            <div class="search-bottom-tip">輸入關鍵字或選擇區域、地區、經理，即可查看停車場地址、聯絡電話及負責人資料。</div>
+        </section>
+
+        <!-- 第一行功能卡片 (4格) -->
         <div class="modules-grid-row">
             <div class="func-card" onclick="alert('進入請假申請...')">
                 <div class="icon-box blue-bg">📄</div>
@@ -33,7 +385,7 @@
             </div>
         </div>
 
-        <!-- 第二行功能卡片 (2格，改用獨立整齊嘅 container 避免拉長) -->
+        <!-- 第二行功能卡片 (2格) -->
         <div class="modules-grid-row-2">
             <div class="func-card" onclick="alert('進入問題查詢...')">
                 <div class="icon-box cyan-light-bg">💬</div>
@@ -62,3 +414,11 @@
                 </div>
             </div>
         </div>
+
+        <!-- 底部版權 -->
+        <footer class="footer-info">
+            MCC Operations Hub
+        </footer>
+    </div>
+</body>
+</html>
