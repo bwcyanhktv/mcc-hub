@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統操作手冊選單 - MCC分區管理系統</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-container">
+        
+        <!-- 頂部標題大卡片 (同 index.html 100% 一致) -->
+        <header class="top-header-card">
+            <div class="brand-subtitle">📖 MCC OPERATIONS MANUALS</div>
+            <h1>系統操作手冊選單</h1>
+            <p class="brand-desc">請選擇您需要查看的日常營運與系統操作手冊</p>
+        </header>
+
+        <!-- 手冊分類卡片格網 (2 欄精緻排版) -->
+        <section class="manuals-grid">
+            <!-- 手冊 1 -->
+            <div class="func-card" onclick="alert('載入手冊中...')">
+                <div class="icon-box blue-bg">📑</div>
+                <div class="func-text">
+                    <h3>停車場日常巡視與檢查指引</h3>
+                    <p>標準開場、巡場路線及設施安全檢查規範</p>
+                </div>
+            </div>
+
+            <!-- 手冊 2 -->
+            <div class="func-card" onclick="alert('載入手冊中...')">
+                <div class="icon-box orange-bg">🔒</div>
+                <div class="func-text">
+                    <h3>鎖車程序與違例處理手冊</h3>
+                    <p>車輛鎖定、解鎖流程及違規處理指引</p>
+                </div>
+            </div>
+
+            <!-- 手冊 3 -->
+            <div class="func-card" onclick="alert('載入手冊中...')">
+                <div class="icon-box green-bg">💳</div>
+                <div class="func-text">
+                    <h3>Yedpay 流動收費系統操作</h3>
+                    <p>收費通知發送、結算及異常交易處理</p>
+                </div>
+            </div>
+
+            <!-- 手冊 4 -->
+            <div class="func-card" onclick="alert('載入手冊中...')">
+                <div class="icon-box cyan-bg">🅿️</div>
+                <div class="func-text">
+                    <h3>Parking.Logic 系統操作指南</h3>
+                    <p>系統基本設定、車位管理及報表匯出</p>
+                </div>
+            </div>
+
+            <!-- 手冊 5 -->
+            <div class="func-card" onclick="alert('載入手冊中...')">
+                <div class="icon-box cyan-light-bg">📷</div>
+                <div class="func-text">
+                    <h3>LPRS 車牌識別系統維護手冊</h3>
+                    <p>相機鏡頭清潔、識別故障排除及重啟指引</p>
+                </div>
+            </div>
+
+            <!-- 手冊 6 -->
+            <div class="func-card" onclick="alert('載入手冊中...')">
+                <div class="icon-box purple-bg">🛠️</div>
+                <div class="func-text">
+                    <h3>設備故障報修與突發事件標準</h3>
+                    <p>閘機、八達通讀卡器故障通報及應急處理</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 返回主頁按鈕列 -->
+        <div class="back-home-row">
+            <button class="back-btn" onclick="goBackHome()">← 返回 MCC 主頁</button>
+        </div>
+
+        <!-- 底部版權 -->
+        <footer class="footer-info">
+            MCC Operations Hub
+        </footer>
+    </div>
+
+    <script>
+        function goBackHome() {
+            // 返回主頁
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
