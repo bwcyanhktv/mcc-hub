@@ -68,7 +68,6 @@ body {
     overflow: hidden;
 }
 
-/* 只有下方的功能卡片保留頂部極細嘅精緻漸層線 */
 .func-card::before,
 .admin-card::before {
     content: '';
@@ -175,20 +174,12 @@ body {
     color: #64748b;
 }
 
-/* 功能卡片格網 */
+/* 功能卡片格網：確保任何尺寸下都唔會變奇怪形狀 */
 .modules-grid-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     margin-bottom: 16px;
-}
-
-.modules-grid-row.single-row {
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.modules-grid-row.single-row .func-card {
-    grid-column: span 1;
 }
 
 /* 第二層「系統操作手冊選單」專用 2 欄網格排版 */
@@ -197,12 +188,6 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
     margin-bottom: 30px;
-}
-
-@media (max-width: 768px) {
-    .manuals-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* 單個功能卡片設計 */
@@ -261,7 +246,7 @@ body {
     line-height: 1.4;
 }
 
-/* 管理員登入列置中與卡片修復 */
+/* 管理員登入列置中 */
 .admin-login-row {
     display: flex;
     justify-content: center;
@@ -326,14 +311,17 @@ body {
     margin-top: 40px;
 }
 
-/* 響應式 */
+/* 針對手動手機或狹窄螢幕的安全 RWD 規則：自動變成整齊的 1-2 欄，絕不變長條柱 */
 @media (max-width: 900px) {
     .modules-grid-row {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 }
-@media (max-width: 550px) {
+@media (max-width: 600px) {
     .modules-grid-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
+    }
+    .manuals-grid {
+        grid-template-columns: 1fr !important;
     }
 }
